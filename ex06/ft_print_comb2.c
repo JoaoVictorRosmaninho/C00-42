@@ -1,77 +1,63 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_print_comb2.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/05 16:21:36 by coder             #+#    #+#             */
-/*   Updated: 2022/02/05 22:44:08 by coder            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <unistd.h>
 
-char	g_number[5];
-
-int	ft_strcmp(char *s1, char *s2)
+void	clear(char *str, int size)
 {
-	while (*s1 && *s2)
+	int	i;
+
+	i = 0;
+	while (i < size)
 	{
-		if (*s1 != *s2)
-			return (0);
-		s1++;
-		s2++;
+		str[i] = '0';
+		i++;
 	}
-	if (*s1 != *s2)
-		return (0);
-	return (1);
 }
 
-void	ft_print(char *ptr)
+void	ft_print(char *str)
 {
-	write(1, ptr, 1);
-	write(1, (ptr + 1), 1);
-	write(1, " ", 1);
-	write(1, (ptr + 2), 1);
-	write(1, (ptr + 3), 1);
-	if (!(ft_strcmp(ptr, "9899")))
-		write(1, ", ", 2);
-}
-
-void	init_array(void)
-{
-	g_number[0] = '0';
-	g_number[1] = '0';
-	g_number[2] = '0';
-	g_number[3] = '1';
-	g_number[4] = '\0';
+	if ((str[0] == '9' && str[1] == '8'))
+	{
+		write(1, str, 1);
+		write(1, (str + 1), 1);
+		write(1, " ", 1);
+		write(1, (str + 2), 1);
+		write(1, (str + 3), 1);
+	}
+	else
+	{
+		write(1, str, 1);
+		write(1, (str + 1), 1);
+		write(1, " ", 1);
+		write(1, (str + 2), 1);
+		write(1, (str + 3), 1);
+		write(1, ",", 1);
+		write(1, " ", 1);
+	}
 }
 
 void	ft_print_comb2(void)
 {
-	init_array();
-	while (g_number[0] <= '9')
+	char	str[4];
+
+	clear(str, 4);
+	while (str[0] <= '9')
 	{
-		while (g_number[1] <= '9')
+		while (str[1] <= '9')
 		{
-			while (g_number[2] <= '9')
+			str[2] = str[0];
+			str[3] = str[1] + 1;
+			while (str[2] <= '9')
 			{
-				while (g_number[3] <= '9')
+				while (str[3] <= '9')
 				{
-					ft_print(g_number);
-					g_number[3]++;
+					ft_print(str);
+					str[3]++;
 				}
-				g_number[2]++;
-				g_number[3] = g_number[1];
+			str[2]++;
+			str[3] = '0';
 			}
-			g_number[1]++;
-			g_number[2] = g_number[0];
-			g_number[3] = g_number[1] + 1;
+			str[1]++;
 		}
-		g_number[0]++;
-		g_number[1] = '0';
-		g_number[2] = g_number[1];
-		g_number[3] = g_number[2] + 1;
+	str[0]++;
+	str[1] = '0';
 	}
 }
